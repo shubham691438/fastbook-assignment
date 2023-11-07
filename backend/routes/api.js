@@ -2,25 +2,19 @@ const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const natural = require('natural');
-const fs = require('fs');
 
 const { createWorker } = require('tesseract.js');
 
-// Creating a tmp directory if it doesn't exist
-const tmpDirectory = 'tmp';
-if (!fs.existsSync(tmpDirectory)) {
-  fs.mkdirSync(tmpDirectory);
-}
-
-// Define Multer storage configuration to use the /tmp directory
+// Define Multer storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, tmpDirectory); // Files will be stored in the "tmp" folder
+    cb(null, 'uploads/'); // Files will be stored in the "uploads" folder
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '_' + file.originalname);
   }
 });
+
 // Initialize Multer middleware with the storage configuration
 const upload = multer({ storage: storage });
 
