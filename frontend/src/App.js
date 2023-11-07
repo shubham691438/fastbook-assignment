@@ -11,6 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import HashLoader from 'react-spinners/HashLoader';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -18,6 +19,8 @@ function App() {
   const [keywordText, setKeywordText] = useState('');
   const [suggestedWords, setSuggestedWords] = useState([]);
   const [updatedText, setUpdatedText] = useState('');
+  const [imgToTextLoading,setImgToTextLoading]=useState(false);
+  const [wordSuggestionLoading,setWordSuggestionLoading]=useState(false);
 
   const backend_url=process.env.REACT_APP_BACKEND_URL
   
@@ -33,17 +36,22 @@ function App() {
       formData.append('img', selectedFile);
 
       try {
+        setImgToTextLoading(true);
         const response = await fetch(`${backend_url}/api/imageToText`, {
           method: 'POST',
           body: formData,
         });
 
         if (response.ok) {
+          
           const data = await response.json();
           setRecognizedText(data.text);
+          
         } else {
           console.error('Error:', response.statusText);
+          
         }
+        setImgToTextLoading(false)
       } catch (error) {
         console.error('Error:', error);
       }
@@ -52,6 +60,7 @@ function App() {
 
   const handleWordSuggestion = async () => {
     try {
+      setWordSuggestionLoading(true);
       const response = await fetch(`${backend_url}/api/wordSuggestion`, {
         method: 'POST',
         headers: {
@@ -69,6 +78,7 @@ function App() {
       } else {
         console.error('Error:', response.statusText);
       }
+      setWordSuggestionLoading(false);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -88,6 +98,7 @@ function App() {
   };
 
   return (
+    
     <Box sx={{m: 5,}}>
       <Box className="App" sx={{  display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
         <Box>
@@ -102,7 +113,20 @@ function App() {
           </Box>
           <Box>
             <h2>Recognized Text:</h2>
+            {imgToTextLoading ? (
+            <div
+              style={{
+               
+                display:"flex",
+                justifyContent:"center",
+                zIndex: 9999,
+              }}
+            >
+              <HashLoader color="#36d7b7" loading={imgToTextLoading} size={150} aria-label="Loading Spinner" data-testid="loader" />
+            </div>
+          ) : (
             <Box sx={{ minHeight: '200px' ,maxWidth:"500px"}}>{recognizedText}</Box>
+          )}
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '350px', height: '200px' }}>
             <FormControl>
@@ -126,7 +150,18 @@ function App() {
             <h2>Suggested Words:</h2>
           </Box>
 
-          
+          {wordSuggestionLoading ? (
+            <div
+              style={{
+               
+                display:"flex",
+                justifyContent:"center",
+                zIndex: 9999,
+              }}
+            >
+              <HashLoader color="#36d7b7" loading={wordSuggestionLoading} size={150} aria-label="Loading Spinner" data-testid="loader" />
+            </div>
+          ) : (
             <TableContainer component={Paper}>
               <Table aria-label="simple table">
                 <TableHead sx={{ backgroundColor: "red" }}>
@@ -152,7 +187,7 @@ function App() {
                 </TableBody>
               </Table>
             </TableContainer>
-          
+          )}
         </Box>
       </Box>
       <Box sx={{ display: 'flex', mt: "100px", justifyContent: "center" }}>
@@ -165,6 +200,7 @@ function App() {
         <Box sx={{ minHeight: '100px' }}>{updatedText}</Box>
       </Box>
     </Box>
+   
   );
 }
 
