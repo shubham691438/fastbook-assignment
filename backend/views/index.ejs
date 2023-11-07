@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="/api/imageToText" method="post" enctype="multipart/form-data">
+      <label for="img">Select an Image:</label>
+      <input type="file" name="img" id="img">
+      <button type="submit">Upload Image</button>
+
+      <h1>Recognized Text</h1>
+
+      <h1>S</h1>
+    </form>
+  </body>
+</html>
