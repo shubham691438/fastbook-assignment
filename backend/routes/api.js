@@ -6,45 +6,25 @@ const fs = require('fs');
 
 const { createWorker } = require('tesseract.js');
 
-// Creating a tmp directory if it doesn't exist
-const tmpDirectory = 'tmp';
-if (!fs.existsSync(tmpDirectory)) {
-  fs.mkdirSync(tmpDirectory);
-}
-
-// Define Multer storage configuration to use the /tmp directory
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, tmpDirectory); // Files will be stored in the "tmp" folder
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '_' + file.originalname);
+// Route to handle text to image conversion
+router.post('/imageToText', async (req, res) => {
+  if (!req.files || !req.files.img) {
+    return res.status(400).json({ error: 'No file provided' });
   }
-});
-// Initialize Multer middleware with the storage configuration
-const upload = multer({ storage: storage });
 
-//route to handle text to image conversion
-router.post('/imageToText', upload.single('img'), async (req, res) => {
+  const uploadedFile = req.files.img;
 
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file provided' });
-    }
-     
-  
-    try {
-      const worker = await createWorker('eng');
-      const { data: { text } } = await worker.recognize(req.file.path);
-      console.log(text);
-      await worker.terminate();
+  try {
+    const worker = await createWorker();
+    const { data: { text } } = await worker.recognize(uploadedFile.tempFilePath);
+    console.log(text);
+    await worker.terminate();
 
-      res.status(200).json({ msg: 'Successfully converted image to text', text });
-    } 
-    
-    catch (error) {
-      console.error('Error processing the image:', error);
-      res.status(500).json({ error: 'Error processing the image' });
-    }
+    res.status(200).json({ msg: 'Successfully converted image to text', text });
+  } catch (error) {
+    console.error('Error processing the image:', error);
+    res.status(500).json({ error: 'Error processing the image' });
+  }
 });
   
 
