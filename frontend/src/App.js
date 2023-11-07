@@ -19,6 +19,9 @@ function App() {
   const [suggestedWords, setSuggestedWords] = useState([]);
   const [updatedText, setUpdatedText] = useState('');
 
+  const backend_url=process.env.REACT_APP_BACKEND_URL
+  
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -30,7 +33,7 @@ function App() {
       formData.append('img', selectedFile);
 
       try {
-        const response = await fetch('http://localhost:5000/api/imageToText', {
+        const response = await fetch(`${backend_url}/api/imageToText`, {
           method: 'POST',
           body: formData,
         });
@@ -49,7 +52,7 @@ function App() {
 
   const handleWordSuggestion = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/wordSuggestion', {
+      const response = await fetch(`${backend_url}/api/wordSuggestion`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
