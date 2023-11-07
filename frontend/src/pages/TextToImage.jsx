@@ -99,7 +99,7 @@ const TextToImage = () => {
   
     return (
       
-      <Box sx={{m: 5,}}>
+        <>
         <Box className="App" sx={{  display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
           <Box>
             <Box sx={{ maxWidth: '400px', height: '200px' }}>
@@ -199,7 +199,7 @@ const TextToImage = () => {
           <h3>Text After applying Suggestions:</h3>
           <Box sx={{ minHeight: '100px' }}>{updatedText}</Box>
         </Box>
-      </Box>
+        </>
      
     );
 }
