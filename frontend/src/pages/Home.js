@@ -12,19 +12,19 @@ const Home = () => {
       <Link to='/image-to-text'style={{marginTop:'20px'}}>
         <Fab variant="extended"  sx={{width:'400px'}}>
           <NavigationIcon  />
-          Navigate
+           Image to Text using OCR
         </Fab>
       </Link>
       <Link to='/qrcode-generator' style={{marginTop:'20px'}}>
         <Fab variant="extended" sx={{width:'400px'}}>
           <NavigationIcon  />
-          Navigate
+           QR Code Generator
         </Fab>
       </Link>
       <Link to={backend_url+"/shopping/auth/google"} style={{marginTop:'20px'}}>
         <Fab variant="extended" sx={{width:'400px'}}>
           <NavigationIcon  />
-          Navigate
+           Google Shopping Api Demostration
         </Fab>
       </Link>
     </Box>
