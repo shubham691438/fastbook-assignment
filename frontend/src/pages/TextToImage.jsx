@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
-import { Box, Input } from '@mui/material';
+import { Box, Input, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -100,10 +100,11 @@ const TextToImage = () => {
     return (
       
         <>
-        <Box className="App" sx={{  display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+        <Typography align='center' variant='h2' >Image to Text Generation</Typography>
+        <Box className="App" sx={{  display: 'flex', flexDirection: 'row', justifyContent: 'space-around' ,mt:5}}>
           <Box>
             <Box sx={{ maxWidth: '400px', height: '200px' }}>
-              <h1>Image to Text Conversion</h1>
+              {/* <h1>Image to Text Conversion</h1> */}
               <FormControl>
                 <Input type="file" id="img" onChange={handleFileChange} />
               </FormControl>
