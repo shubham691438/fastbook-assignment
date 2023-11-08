@@ -37,9 +37,7 @@ const QRCodeGenerator = () => {
 
   return (
     <div>
-       
-        
-        
+    
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box

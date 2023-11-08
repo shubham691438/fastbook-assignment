@@ -1,8 +1,6 @@
 const express = require('express');
-const multer = require('multer');
 const router = express.Router();
 const natural = require('natural');
-const fs = require('fs');
 
 const { createWorker } = require('tesseract.js');
 
@@ -82,5 +80,6 @@ router.post('/wordSuggestion', (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     }
   });
+
 
 module.exports = router;
