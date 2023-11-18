@@ -41,6 +41,7 @@ router.post('/wordSuggestion', (req, res) => {
   
       const suggestions = recognizedWords.map((recognizedWord) => {
         const validSuggestions = keywordList
+
           .map((keyword) => {
             const distance = natural.LevenshteinDistance(recognizedWord, keyword);
             return { keyword, distance };
@@ -65,7 +66,7 @@ router.post('/wordSuggestion', (req, res) => {
         }
       });
   
-      // Filter and format the suggestions to include only valid ones.
+    
       const filteredSuggestions = suggestions
         .filter((suggestion) => suggestion.closestSuggestion !== null)
         .map((suggestion) => ({
