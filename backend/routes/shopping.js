@@ -33,17 +33,17 @@ router.get('/auth/google', (req, res) => {
   res.redirect(getGoogleAuthURL());
 });
 
-// Handling the OAuth callback and exchange the code for tokens
+// Handling the OAuth callback and exchanging the code for tokens
 router.get('/auth/google/callback', async (req, res) => {
   try {
     const code = req.query.code;
 
-    // Exchange the authorization code for tokens
+    // Exchanging the authorization code for tokens
     const tokenResponse = await oauth2Client.getToken(code);
     tokens = tokenResponse.tokens;
     oauth2Client.setCredentials(tokens);
 
-    // store the refresh token in your database for future access
+    // storing the refresh token in your database for future access
     const refreshToken = tokens.refresh_token;
 
     res.redirect('/shopping/add-product');
